@@ -1,6 +1,9 @@
 ﻿using IdentityModel.OidcClient;
 using IdentityModel.OidcClient.Browser;
 using IdentityModel.Client;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using IdentityModel.OidcClient.Results;
 
 namespace MauiAuth0App.Auth0;
 
@@ -52,7 +55,16 @@ public class Auth0Client
 
     var loginResult = await oidcClient.LoginAsync(loginRequest);
 
-    TokenHolder.AccessToken = loginResult.AccessToken;
+    if (!loginResult.IsError) 
+    {
+      await SecureStorage.Default.SetAsync("access_token", loginResult.AccessToken);
+      await SecureStorage.Default.SetAsync("id_token", loginResult.IdentityToken);
+
+      if (loginResult.RefreshToken != null)
+      {
+        await SecureStorage.Default.SetAsync("refresh_token", loginResult.RefreshToken);        
+      }
+    }
 
     return loginResult;
   }
@@ -76,6 +88,42 @@ public class Auth0Client
 
     var browserResult = await oidcClient.Options.Browser.InvokeAsync(browserOptions);
 
+    SecureStorage.Default.RemoveAll();
+
     return browserResult;
+  }
+
+  public async Task<ClaimsPrincipal> GetAuthenticatedUser()
+  {
+    ClaimsPrincipal user = null;
+    
+    var idToken = await SecureStorage.Default.GetAsync("id_token");
+
+    if (idToken != null)
+    {
+      var idTokenObject = new JwtSecurityToken(idToken);
+      if (idTokenObject.ValidTo > DateTime.Now)
+        user = new ClaimsPrincipal(new ClaimsIdentity(idTokenObject.Claims, "none", "name", "role"));
+    }
+
+    return user;
+  }
+
+  public async Task<RefreshTokenResult> RefreshTokenAsync(string refreshToken)
+  {
+    var refreshResult = await oidcClient.RefreshTokenAsync(refreshToken);
+
+    if (!refreshResult.IsError)
+    {
+      await SecureStorage.Default.SetAsync("access_token", refreshResult.AccessToken);
+      await SecureStorage.Default.SetAsync("id_token", refreshResult.IdentityToken);
+      
+      if (refreshResult.RefreshToken != null)
+      {
+        await SecureStorage.Default.SetAsync("refresh_token", refreshResult.RefreshToken);
+      }
+    }
+    
+    return refreshResult;
   }
 }

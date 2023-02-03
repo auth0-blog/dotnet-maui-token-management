@@ -27,7 +27,7 @@ public static class MauiProgram
     {
       Domain = "<YOUR_AUTH0_DOMAIN>",
       ClientId = "<YOUR_CLIENT_ID>",
-      Scope = "openid profile",
+      Scope = "openid profile offline_access",
 			Audience = "<YOUR_API_IDENTIFIER>",
 #if WINDOWS
 			RedirectUri = "http://localhost/callback"

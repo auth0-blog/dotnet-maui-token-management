@@ -80,5 +80,19 @@ public partial class MainPage : ContentPage
       await DisplayAlert("Error", ex.Message, "OK");
     }
   }
+
+  private async void OnLoaded(object sender, EventArgs e)
+  {
+    var user = await auth0Client.GetAuthenticatedUser();
+    
+    if (user != null)
+    {
+      UsernameLbl.Text = user.Identity.Name;
+      UserPictureImg.Source = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+
+      LoginView.IsVisible = false;
+      HomeView.IsVisible = true;
+    }
+  }
 }
 
