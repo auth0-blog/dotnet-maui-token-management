@@ -96,14 +96,26 @@ public class Auth0Client
   public async Task<ClaimsPrincipal> GetAuthenticatedUser()
   {
     ClaimsPrincipal user = null;
-    
+
     var idToken = await SecureStorage.Default.GetAsync("id_token");
 
     if (idToken != null)
     {
-      var idTokenObject = new JwtSecurityToken(idToken);
-      if (idTokenObject.ValidTo > DateTime.Now)
-        user = new ClaimsPrincipal(new ClaimsIdentity(idTokenObject.Claims, "none", "name", "role"));
+      var doc = await new HttpClient().GetDiscoveryDocumentAsync(oidcClient.Options.Authority);
+      var validator = new JwtHandlerIdentityTokenValidator();
+      var options = new OidcClientOptions
+      {
+        ClientId = oidcClient.Options.ClientId,
+        ProviderInformation = new ProviderInformation
+        {
+          IssuerName = doc.Issuer,
+          KeySet = doc.KeySet
+        }
+      };
+
+      var validationResult = await validator.ValidateAsync(idToken, options);
+
+      if (!validationResult.IsError) user = validationResult.User;
     }
 
     return user;
