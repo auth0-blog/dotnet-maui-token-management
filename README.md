@@ -2,7 +2,7 @@ This repository contains a basic .NET MAUI application and an ASP.NET Core Web A
 
 The main goal of this repository is to shown how to use refresh tokens and `SecureStorage` to store tokens in a .NET MAUI application.
 
-Check out the article [Managing Tokens in .NET MAUI](#) for the implementation details.
+Check out the article [Managing Tokens in .NET MAUI](https://auth0.com/blog/managing-tokens-in-dotnet-maui/) for the implementation details.
 
 # Requirements
 
