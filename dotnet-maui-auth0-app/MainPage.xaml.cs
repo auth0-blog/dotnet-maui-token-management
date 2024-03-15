@@ -30,7 +30,7 @@ public partial class MainPage : ContentPage
 
   private async void OnLoginClicked(object sender, EventArgs e)
   {
-    var loginResult = await auth0Client.LoginAsync(new { audience = "https://myapi.com"});
+    var loginResult = await auth0Client.LoginAsync(new { audience = "<YOUR_API_IDENTIFIER>"});
 
     if (!loginResult.IsError)
     {

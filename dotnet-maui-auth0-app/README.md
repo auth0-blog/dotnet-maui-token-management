@@ -22,7 +22,9 @@ Check out the article [Add Authentication to .NET MAUI Apps with Auth0](https://
 
 3. Open the `MauiProgram.cs` file and replace the `<YOUR_AUTH0_DOMAIN>` and `<YOUR_CLIENT_ID>` placeholders with your Auth0 domain and client id respectively (see [Register with Auth0](https://auth0.com/blog/add-authentication-to-dotnet-maui-apps-with-auth0/#Register-with-Auth0) for more details).
 
-4. Run the application with Visual Studio 2022 or use one of the following commands based on your target platform:
+4. Open the `MainPage.xaml.cs` file and replace the `<YOUR_API_IDENTIFIER>` placeholder with the audience you assigned to the `api_aspnet-core_csharp_hello-world` API project.
+
+5. Run the application with Visual Studio 2022 or use one of the following commands based on your target platform:
 
    ```bash
    # macOS target platform
@@ -37,7 +39,7 @@ Check out the article [Add Authentication to .NET MAUI Apps with Auth0](https://
    # Windows target platform (⚠️ Currently not working! ⚠️)
    dotnet build -t:Run -f net8.0-windows10.0.19041.0 -p:WindowsPackageType=None
    ```
-   
+
 
 
 
