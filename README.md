@@ -1,22 +1,19 @@
 This repository contains a basic .NET MAUI application and an ASP.NET Core Web API. Both applications are integrated with Auth0 and the .NET MAUI application calls a protected API endpoint.
 
-The main goal of this repository is to shown how to use refresh tokens and `SecureStorage` to store tokens in a .NET MAUI application.
-
-Check out the article [Managing Tokens in .NET MAUI](https://auth0.com/blog/managing-tokens-in-dotnet-maui/) for the implementation details.
+Check out the article [Call a Protected API from a .NET MAUI Application](https://auth0.com/blog/call-protected-api-from-dotnet-maui-application/) for the implementation details.
 
 # Requirements
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed on your machine
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) installed on your machine
 - The required assets needed for your target(s) platform(s) as described [here](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
-- For Mac, iOS, and Android platforms you need additional settings to enable `SecureStorage`. Please, check [this document](https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/secure-storage#get-started) to learn more.
-- Visual Studio 2022 for Windows 17.3 or Visual Studio 2022 for Mac 17.4 (optional)
+- Visual Studio 2022 for Windows or Visual Studio 2022 for Mac (optional)
 
 # To run this application
 
 1. Clone the repo with the following command:
 
    ```bash
-   git clone https://github.com/auth0-blog/dotnet-maui-token-management.git
+   git clone https://github.com/auth0-blog/dotnet-maui-auth0-call-api.git
    ```
 
 2. Move to the `api_aspnet-core_csharp_hello-world` folder.

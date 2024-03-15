@@ -1,11 +1,12 @@
-﻿using MauiAuth0App.Auth0;
+﻿using Auth0.OidcClient;
+using System.Net.Http.Headers;
 
 namespace MauiAuth0App;
 
 public partial class MainPage : ContentPage
 {
 	int count = 0;
-  private readonly Auth0Client auth0Client;
+	private readonly Auth0Client auth0Client;
   private HttpClient _httpClient;
 
   public MainPage(Auth0Client client, HttpClient httpClient)
@@ -13,13 +14,9 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
     auth0Client = client;
     _httpClient = httpClient;
-
-#if WINDOWS
-    auth0Client.Browser = new WebViewBrowserAuthenticator(WebViewInstance);
-#endif
   }
 
-  private void OnCounterClicked(object sender, EventArgs e)
+	private void OnCounterClicked(object sender, EventArgs e)
 	{
 		count++;
 
@@ -33,7 +30,7 @@ public partial class MainPage : ContentPage
 
   private async void OnLoginClicked(object sender, EventArgs e)
   {
-    var loginResult = await auth0Client.LoginAsync();
+    var loginResult = await auth0Client.LoginAsync(new { audience = "https://myapi.com"});
 
     if (!loginResult.IsError)
     {
@@ -43,6 +40,8 @@ public partial class MainPage : ContentPage
 
       LoginView.IsVisible = false;
       HomeView.IsVisible = true;
+
+      TokenHolder.AccessToken = loginResult.AccessToken;
     }
     else
     {
@@ -54,15 +53,8 @@ public partial class MainPage : ContentPage
   {
     var logoutResult = await auth0Client.LogoutAsync();
 
-    if (!logoutResult.IsError)
-    {
-      HomeView.IsVisible = false;
-      LoginView.IsVisible = true;
-    }
-    else
-    {
-      await DisplayAlert("Error", logoutResult.ErrorDescription, "OK");
-    }
+    HomeView.IsVisible = false;
+    LoginView.IsVisible = true;
   }
 
   private async void OnApiCallClicked(object sender, EventArgs e)
@@ -80,19 +72,4 @@ public partial class MainPage : ContentPage
       await DisplayAlert("Error", ex.Message, "OK");
     }
   }
-
-  private async void OnLoaded(object sender, EventArgs e)
-  {
-    var user = await auth0Client.GetAuthenticatedUser();
-    
-    if (user != null)
-    {
-      UsernameLbl.Text = user.Identity.Name;
-      UserPictureImg.Source = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
-
-      LoginView.IsVisible = false;
-      HomeView.IsVisible = true;
-    }
-  }
 }
-

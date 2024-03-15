@@ -1,4 +1,4 @@
-dotnet-maui-token-management
+dotnet-maui-auth0-call-api
 
 Copyright 2022 Okta, Inc.
 
@@ -15,16 +15,14 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 
 
-The following 3rd-party software packages may be used by or distributed with dotnet-maui-token-management. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
+The following 3rd-party software packages may be used by or distributed with `dotnet-maui-auth0-call-api` Certain  licenses and notices may appear in other parts of the product in accordance with the applicable license requirements. 
 
-Date generated: 2023-2-14
-
-Revision ID: 4a1e7ca5e2b9f55fdd0784b68860a67a5e9ed89e
-
-================================================================================
-================================================================================
+The Okta product that this document references does not necessarily use all the open source software packages referred to below and may also only use portions of a given package. In addition, Okta makes available to customers certain  complementary, unmodified open source software packages that facilitate customers’ use of the `dotnet-maui-auth0-call-api` product. 
 
 
+
+
+_________________________________________________________________________________
 
 
 
@@ -37,13 +35,13 @@ Revision ID: 4a1e7ca5e2b9f55fdd0784b68860a67a5e9ed89e
 
 
 --------------------------------------------------------------------------------
-Package Title: IdentityModel.OidcClient (5.2.1)
+IdentityModel.OidcClient (5.0.2)
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
 Apache-2.0
 
-Copyright 2023, IdentityModel.OidcClient Contributors
+Copyright 2022, IdentityModel.OidcClient Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -59,29 +57,7 @@ See the License for the specific language governing permissions and limitations 
 
 
 --------------------------------------------------------------------------------
-Package Title: IdentityModel.OidcClient.IdentityTokenValidator (5.2.1)
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-Copyright 2023, IdentityModel.OidcClient.IdentityTokenValidator Contributors
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and limitations under the License.
-
-
---------------------------------------------------------------------------------
-Package Title: Microsoft.AspNetCore.Authentication.JwtBearer (6.0.9)
+Microsoft.AspNetCore.Authentication.JwtBearer (6.0.9)
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -113,7 +89,7 @@ Multi-license: BSD-2-Clause OR MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: Microsoft.Extensions.Http (7.0.0)
+Microsoft.Extensions.Http (6.0.0)
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -146,7 +122,7 @@ SOFTWARE.
 
 
 * Other Licenses *
-Multi-license: Apache-2.0 OR BSD-3-Clause OR IETF OR MIT OR Zlib
+Multi-license: Apache-2.0 OR BSD-2-Clause OR BSD-3-Clause OR IETF OR MIT OR NCSA OR Unicode-DFS-2020 OR W3C-20150513 OR Zlib
 
 
 The MIT License (MIT)
@@ -176,7 +152,7 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: Microsoft.Extensions.Logging.Debug (7.0.0-rc.2.22472.3)
+Microsoft.Extensions.Logging.Debug (7.0.0-rc.1.22426.10)
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -209,7 +185,7 @@ SOFTWARE.
 
 
 * Other Licenses *
-Multi-license: Apache-2.0 OR BSD-3-Clause OR IETF OR MIT OR Zlib
+Multi-license: Apache-2.0 OR BSD-2-Clause OR BSD-3-Clause OR BSD-4-Clause-UC OR CC0-1.0 OR IETF OR MIT OR NCSA OR Unicode-DFS-2020 OR W3C-20150513 OR Zlib
 
 
 The MIT License (MIT)
@@ -353,17 +329,6 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-* BSD-4-Clause *
-
-Copyright (c) <year> <owner> . All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-   1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-   2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-   3. All advertising materials mentioning features or use of this software must display the following acknowledgement:
-   This product includes software developed by the organization .
-   4. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 * BSD-4-Clause-UC *
 
 BSD-4-Clause (University of California-Specific)
@@ -467,6 +432,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+* Unicode-DFS-2020 *
+
+\n\n    UNICODE, INC. LICENSE AGREEMENT - DATA FILES AND SOFTWARE\n\n    See Terms of Use for definitions of Unicode Inc.'s\n    Data Files and Software.\n\n    NOTICE TO USER: Carefully read the following legal agreement.\n    BY DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING UNICODE INC.'S\n    DATA FILES ("DATA FILES"), AND/OR SOFTWARE ("SOFTWARE"),\n    YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE\n    TERMS AND CONDITIONS OF THIS AGREEMENT.\n    IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE\n    THE DATA FILES OR SOFTWARE.\n\n    COPYRIGHT AND PERMISSION NOTICE\n\n    Copyright © 1991-2020 Unicode, Inc. All rights reserved.\n    Distributed under the Terms of Use in https://www.unicode.org/copyright.html.\n\n    Permission is hereby granted, free of charge, to any person obtaining\n    a copy of the Unicode data files and any associated documentation\n    (the "Data Files") or Unicode software and any associated documentation\n    (the "Software") to deal in the Data Files or Software\n    without restriction, including without limitation the rights to use,\n    copy, modify, merge, publish, distribute, and/or sell copies of\n    the Data Files or Software, and to permit persons to whom the Data Files\n    or Software are furnished to do so, provided that either\n    (a) this copyright and permission notice appear with all copies\n    of the Data Files or Software, or\n    (b) this copyright and permission notice appear in associated\n    Documentation.\n\n    THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF\n    ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE\n    WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n    NONINFRINGEMENT OF THIRD PARTY RIGHTS.\n    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS\n    NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL\n    DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,\n    DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER\n    TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR\n    PERFORMANCE OF THE DATA FILES OR SOFTWARE.\n\n    Except as contained in this notice, the name of a copyright holder\n    shall not be used in advertising or otherwise to promote the sale,\n    use or other dealings in these Data Files or Software without prior\n    written authorization of the copyright holder.\n\n
+
 * W3C-20150513 *
 
 This work is being provided by the copyright holders under the following license.
@@ -494,5 +463,4 @@ Permission is granted to anyone to use this software for any purpose, including 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2023-2-14
-
+Report Generated by FOSSA on 2022-10-12

@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
-using MauiAuth0App.Auth0;
+﻿using Microsoft.Extensions.Logging;
+using Auth0.OidcClient;
 using Microsoft.Extensions.Http;
 
 namespace MauiAuth0App;
@@ -25,15 +25,11 @@ public static class MauiProgram
 
     builder.Services.AddSingleton(new Auth0Client(new()
     {
-      Domain = "<YOUR_AUTH0_DOMAIN>",
-      ClientId = "<YOUR_CLIENT_ID>",
-      Scope = "openid profile offline_access",
-			Audience = "<YOUR_API_IDENTIFIER>",
-#if WINDOWS
-			RedirectUri = "http://localhost/callback"
-#else
-      RedirectUri = "myapp://callback"
-#endif
+				Domain = "<YOUR_AUTH0_DOMAIN>",
+				ClientId = "<YOUR_CLIENT_ID>",
+				RedirectUri = "myapp://callback/",
+				PostLogoutRedirectUri = "myapp://callback/",
+				Scope = "openid profile email"
     }));
 
     builder.Services.AddSingleton<TokenHandler>();
@@ -44,6 +40,6 @@ public static class MauiProgram
 			sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("DemoAPI")
 		);
 
-    return builder.Build();
+		return builder.Build();
 	}
 }
