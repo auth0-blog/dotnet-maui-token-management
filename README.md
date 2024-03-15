@@ -4,9 +4,9 @@ Check out the article [Call a Protected API from a .NET MAUI Application](https:
 
 # Requirements
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed on your machine
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) installed on your machine
 - The required assets needed for your target(s) platform(s) as described [here](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
-- Visual Studio 2022 for Windows 17.3 or Visual Studio 2022 for Mac 17.4 (optional)
+- Visual Studio 2022 for Windows or Visual Studio 2022 for Mac (optional)
 
 # To run this application
 
