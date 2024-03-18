@@ -1,19 +1,20 @@
 ﻿using Auth0.OidcClient;
-using System.Net.Http.Headers;
 
 namespace MauiAuth0App;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-	private readonly Auth0Client auth0Client;
+  int count = 0;
+  private readonly Auth0Client auth0Client;
   private HttpClient _httpClient;
+  private UserManager _userManager;
 
-  public MainPage(Auth0Client client, HttpClient httpClient)
-	{
-		InitializeComponent();
+  public MainPage(Auth0Client client, HttpClient httpClient, UserManager userManager)
+  {
+	  InitializeComponent();
     auth0Client = client;
     _httpClient = httpClient;
+    _userManager = userManager;
   }
 
 	private void OnCounterClicked(object sender, EventArgs e)
@@ -30,7 +31,7 @@ public partial class MainPage : ContentPage
 
   private async void OnLoginClicked(object sender, EventArgs e)
   {
-    var loginResult = await auth0Client.LoginAsync(new { audience = "<YOUR_API_IDENTIFIER>"});
+    var loginResult = await auth0Client.LoginAsync(new { audience = "<YOUR_API_IDENTIFIER"});
 
     if (!loginResult.IsError)
     {
@@ -41,7 +42,14 @@ public partial class MainPage : ContentPage
       LoginView.IsVisible = false;
       HomeView.IsVisible = true;
 
-      TokenHolder.AccessToken = loginResult.AccessToken;
+      try
+      {
+        await SecureStorage.Default.SetAsync("access_token", loginResult.AccessToken);
+        await SecureStorage.Default.SetAsync("id_token", loginResult.IdentityToken);
+      } catch (Exception ex)
+      {
+        await DisplayAlert("Error", ex.Message, "Ok");
+      }
     }
     else
     {
@@ -52,6 +60,8 @@ public partial class MainPage : ContentPage
   private async void OnLogoutClicked(object sender, EventArgs e)
   {
     var logoutResult = await auth0Client.LogoutAsync();
+
+    SecureStorage.Default.RemoveAll();
 
     HomeView.IsVisible = false;
     LoginView.IsVisible = true;
@@ -71,5 +81,37 @@ public partial class MainPage : ContentPage
     {
       await DisplayAlert("Error", ex.Message, "OK");
     }
+  }
+
+  private async void OnLoaded(object sender, EventArgs e)
+  {
+    var user = await _userManager.GetAuthenticatedUser();
+    
+    if (user != null)
+    {
+      UsernameLbl.Text = user.Identity.Name;
+      UserPictureImg.Source = user.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+
+      LoginView.IsVisible = false;
+      HomeView.IsVisible = true;
+    }
+  }
+
+  private async Task<RefreshTokenResult> RefreshTokenAsync(string refreshToken)
+  {
+    var refreshResult = await auth0Client.RefreshTokenAsync(refreshToken);
+
+    if (!refreshResult.IsError)
+    {
+      await SecureStorage.Default.SetAsync("access_token", refreshResult.AccessToken);
+      await SecureStorage.Default.SetAsync("id_token", refreshResult.IdentityToken);
+      
+      if (refreshResult.RefreshToken != null)
+      {
+        await SecureStorage.Default.SetAsync("refresh_token", refreshResult.RefreshToken);
+      }
+    }
+    
+    return refreshResult;
   }
 }
