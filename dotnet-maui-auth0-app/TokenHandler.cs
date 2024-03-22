@@ -1,6 +1,6 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 
-namespace MauiAuth0App.Auth0;
+namespace MauiAuth0App;
 
 public class TokenHandler : DelegatingHandler
 {

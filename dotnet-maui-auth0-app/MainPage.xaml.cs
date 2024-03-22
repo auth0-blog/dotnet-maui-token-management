@@ -1,25 +1,23 @@
-﻿using MauiAuth0App.Auth0;
+﻿using Auth0.OidcClient;
 
 namespace MauiAuth0App;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+  int count = 0;
   private readonly Auth0Client auth0Client;
   private HttpClient _httpClient;
+  private UserManager _userManager;
 
-  public MainPage(Auth0Client client, HttpClient httpClient)
-	{
-		InitializeComponent();
+  public MainPage(Auth0Client client, HttpClient httpClient, UserManager userManager)
+  {
+	  InitializeComponent();
     auth0Client = client;
     _httpClient = httpClient;
-
-#if WINDOWS
-    auth0Client.Browser = new WebViewBrowserAuthenticator(WebViewInstance);
-#endif
+    _userManager = userManager;
   }
 
-  private void OnCounterClicked(object sender, EventArgs e)
+	private void OnCounterClicked(object sender, EventArgs e)
 	{
 		count++;
 
@@ -33,7 +31,7 @@ public partial class MainPage : ContentPage
 
   private async void OnLoginClicked(object sender, EventArgs e)
   {
-    var loginResult = await auth0Client.LoginAsync();
+    var loginResult = await auth0Client.LoginAsync(new { audience = "<YOUR_API_IDENTIFIER"});
 
     if (!loginResult.IsError)
     {
@@ -43,6 +41,15 @@ public partial class MainPage : ContentPage
 
       LoginView.IsVisible = false;
       HomeView.IsVisible = true;
+
+      try
+      {
+        await SecureStorage.Default.SetAsync("access_token", loginResult.AccessToken);
+        await SecureStorage.Default.SetAsync("id_token", loginResult.IdentityToken);
+      } catch (Exception ex)
+      {
+        await DisplayAlert("Error", ex.Message, "Ok");
+      }
     }
     else
     {
@@ -54,15 +61,10 @@ public partial class MainPage : ContentPage
   {
     var logoutResult = await auth0Client.LogoutAsync();
 
-    if (!logoutResult.IsError)
-    {
-      HomeView.IsVisible = false;
-      LoginView.IsVisible = true;
-    }
-    else
-    {
-      await DisplayAlert("Error", logoutResult.ErrorDescription, "OK");
-    }
+    SecureStorage.Default.RemoveAll();
+
+    HomeView.IsVisible = false;
+    LoginView.IsVisible = true;
   }
 
   private async void OnApiCallClicked(object sender, EventArgs e)
@@ -83,7 +85,7 @@ public partial class MainPage : ContentPage
 
   private async void OnLoaded(object sender, EventArgs e)
   {
-    var user = await auth0Client.GetAuthenticatedUser();
+    var user = await _userManager.GetAuthenticatedUser();
     
     if (user != null)
     {
@@ -94,5 +96,22 @@ public partial class MainPage : ContentPage
       HomeView.IsVisible = true;
     }
   }
-}
 
+  private async Task<RefreshTokenResult> RefreshTokenAsync(string refreshToken)
+  {
+    var refreshResult = await auth0Client.RefreshTokenAsync(refreshToken);
+
+    if (!refreshResult.IsError)
+    {
+      await SecureStorage.Default.SetAsync("access_token", refreshResult.AccessToken);
+      await SecureStorage.Default.SetAsync("id_token", refreshResult.IdentityToken);
+      
+      if (refreshResult.RefreshToken != null)
+      {
+        await SecureStorage.Default.SetAsync("refresh_token", refreshResult.RefreshToken);
+      }
+    }
+    
+    return refreshResult;
+  }
+}
