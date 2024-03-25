@@ -24,7 +24,7 @@ public class TokenHandler : DelegatingHandler
     if (responseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized 
         && refreshToken != null)
     {
-      var refreshResult = await auth0Client.RefreshTokenAsync(refreshToken);
+      var refreshResult = await RefreshTokensAsync(refreshToken);
       
       if (!refreshResult.IsError)
       {
@@ -36,5 +36,23 @@ public class TokenHandler : DelegatingHandler
     }
 
     return responseMessage;
+  }
+
+  private async Task<RefreshTokenResult> RefreshTokensAsync(string refreshToken)
+  {
+    var refreshResult = await auth0Client.RefreshTokenAsync(refreshToken);
+
+    if (!refreshResult.IsError)
+    {
+      await SecureStorage.Default.SetAsync("access_token", refreshResult.AccessToken);
+      await SecureStorage.Default.SetAsync("id_token", refreshResult.IdentityToken);
+
+      if (refreshResult.RefreshToken != null)
+      {
+        await SecureStorage.Default.SetAsync("refresh_token", refreshResult.RefreshToken);
+      }
+    }
+
+    return refreshResult;
   }
 }

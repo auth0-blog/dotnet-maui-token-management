@@ -46,6 +46,11 @@ public partial class MainPage : ContentPage
       {
         await SecureStorage.Default.SetAsync("access_token", loginResult.AccessToken);
         await SecureStorage.Default.SetAsync("id_token", loginResult.IdentityToken);
+
+        if (loginResult.RefreshToken != null)
+        {
+          await SecureStorage.Default.SetAsync("refresh_token", loginResult.RefreshToken); 
+        }
       } catch (Exception ex)
       {
         await DisplayAlert("Error", ex.Message, "Ok");
@@ -95,23 +100,5 @@ public partial class MainPage : ContentPage
       LoginView.IsVisible = false;
       HomeView.IsVisible = true;
     }
-  }
-
-  private async Task<RefreshTokenResult> RefreshTokenAsync(string refreshToken)
-  {
-    var refreshResult = await auth0Client.RefreshTokenAsync(refreshToken);
-
-    if (!refreshResult.IsError)
-    {
-      await SecureStorage.Default.SetAsync("access_token", refreshResult.AccessToken);
-      await SecureStorage.Default.SetAsync("id_token", refreshResult.IdentityToken);
-      
-      if (refreshResult.RefreshToken != null)
-      {
-        await SecureStorage.Default.SetAsync("refresh_token", refreshResult.RefreshToken);
-      }
-    }
-    
-    return refreshResult;
   }
 }
